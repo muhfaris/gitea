@@ -1657,7 +1657,7 @@ function showDeletePopup() {
     var $this = $(this);
     var filter = "";
 
-    // Add repository name in content
+    // Add the repository name to class content
     var pattern = /&([^]*)[^]gt;|<b>[^]*[^]<\/b>/;
     var content = $('.content').html();
     content     = content.replace(pattern,"<b>"+$this.data('repo-name')+"</b>");
