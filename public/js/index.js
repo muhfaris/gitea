@@ -1656,25 +1656,16 @@ $(function () {
 function showDeletePopup() {
     var $this = $(this);
     var filter = "";
-    var uri = "";
-    var content = "";
-    var pattern = /del[^]*/;
+
+    // Add repository name in content
+    var pattern = /&([^]*)[^]gt;|<b>[^]*[^]<\/b>/;
+    var content = $('.content').html();
+    content     = content.replace(pattern,"<b>"+$this.data('repo-name')+"</b>");
+    $('.content').html(content);
     
     if ($this.attr("id")) {
         filter += "#" + $this.attr("id")
     }
-
-    if(pattern.test($this.data('url'))) {
-        uri = $this.data('url').replace(pattern,$this.data('id'));
-        content = $('.content p:nth-child(2)').html();
-        $.post(uri, {
-             "_csrf": csrf,
-             "id": $this.data('id')
-         }).done(function(r){
-             content = content.replace(/(\&[^](.*)(?=re))|(<[^](.*)(?=re))/,"<b>"+r+"</b> ");
-             $('.content p:nth-child(2)').html(content);
-         });
-     }
 
     $('.delete.modal' + filter).modal({
         closable: false,
