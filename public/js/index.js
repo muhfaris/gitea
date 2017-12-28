@@ -1658,9 +1658,8 @@ function showDeletePopup() {
     var filter = "";
 
     // Add the repository name to class content
-    var pattern = /&([^]*)[^]gt;|<b>[^]*[^]<\/b>/;
     var content = $('.content').html();
-    content     = content.replace(pattern,"<b>"+$this.data('repo-name')+"</b>");
+    content     = content.replace("%s","<strong>"+$this.data('repo-name')+"</strong>");
     $('.content').html(content);
     
     if ($this.attr("id")) {
@@ -1669,6 +1668,10 @@ function showDeletePopup() {
 
     $('.delete.modal' + filter).modal({
         closable: false,
+        onDeny: function() {
+            content     = content.replace("<strong>"+$this.data('repo-name')+"</strong>", "%s");
+            $('.content').html(content);
+        },
         onApprove: function() {
             if ($this.data('type') == "form") {
                 $($this.data('form')).submit();
